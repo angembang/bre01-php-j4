@@ -1,0 +1,28 @@
+SELECT * FROM users
+SELECT * FROM users ORDER BY last_name
+SELECT * FROM users ORDER BY registration_date DESC LIMIT 1
+SELECT * FROM users WHERE MONTH(birthdate) = MONTH(NOW())
+SELECT COUNT(*) AS total_user_nbr FROM users
+SELECT users. *, addresses.city FROM users JOIN addresses ON users.address_id = addresses.id
+SELECT users. *,addresses.number FROM users 
+    JOIN addresses ON users.address_id = addresses.id 
+    WHERE addresses.number IS NULL
+SELECT * FROM products WHERE price > 1000
+SELECT products. *, pictures.* FROM products JOIN pictures ON products.id = pictures.id 
+SELECT products.*, categories.title 
+    FROM products 
+    JOIN products_categories ON product_id = products_categories.product_id 
+    JOIN categories ON category_id = products_categories.category_id 
+    WHERE categories.title = 'Voyage'
+SELECT users.*, COUNT(products_orders.order_id) AS nombre_de_commandes 
+    FROM users 
+    JOIN products_orders ON users.id = products_orders.product_id 
+    JOIN orders ON orders.id = products_orders.order_id 
+    GROUP BY users.id 
+    HAVING COUNT(products_orders.order_id) > 10
+SELECT users.*, products.*, products_orders.*, orders.* 
+    FROM users
+    JOIN orders ON users.id = orders.user_id
+    JOIN products_orders ON orders.id = products_orders.order_id
+    JOIN products ON products_orders.product_id = products.id
+    LIMIT 1;
